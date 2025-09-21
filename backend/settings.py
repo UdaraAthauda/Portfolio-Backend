@@ -1,6 +1,10 @@
 from pathlib import Path
 import environs
 import os
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 env = environs.Env()
 env.read_env()
@@ -36,6 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'drf_yasg',
+    'cloudinary_storage',
+    'cloudinary',
 
     # local apps
     'api',
@@ -77,16 +83,16 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
 '''
+
+
 # PostgreSQL database on Render
 
 import dj_database_url
@@ -94,7 +100,6 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.parse(env('DATABASE_URL'))
 }
-'''
 
 
 # Password validation
@@ -135,7 +140,10 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -154,3 +162,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('EMAIL_HOST_USER')
+
+
+# Cloudinary configuration
+cloudinary.config(
+    cloud_name=env('CLOUDINARY_CLOUD_NAME'),
+    api_key=env('CLOUDINARY_API_KEY'),
+    api_secret=env('CLOUDINARY_API_SECRET'),
+)

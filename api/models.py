@@ -34,10 +34,10 @@ class Experience(models.Model):
 
 class Introduction(models.Model):
     name = models.CharField(max_length=100)
-    profile_img = models.ImageField(upload_to='profile_img', null=True, blank=True)
+    profile_img = models.ImageField(upload_to='profile_img/', null=True, blank=True)
     description = models.TextField()
     about = models.TextField()
-    resume = models.FileField(upload_to='resume', null=True, blank=True)
+    resume = models.FileField(upload_to='resume/', null=True, blank=True)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
     location = models.CharField(max_length=50)
@@ -63,7 +63,7 @@ class Education(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    image = models.ImageField(upload_to='project_img', null=True, blank=True)
+    image = models.ImageField(upload_to='project_img/', null=True, blank=True)
     skills = models.ManyToManyField(Skill, related_name='projects')
     created_at = models.DateField(null=True, blank=True)
     github = models.URLField()

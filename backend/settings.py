@@ -1,8 +1,5 @@
 from pathlib import Path
 import environs
-import os
-import cloudinary
-
 
 env = environs.Env()
 env.read_env()
@@ -25,19 +22,14 @@ ALLOWED_HOSTS = [env('ALLOWED_HOSTS_RENDER'), "localhost", "127.0.0.1"]
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.staticfiles',
-    
-    # Cloudinary
-    "cloudinary_storage",
-    "cloudinary",
-    
+INSTALLED_APPS = [    
     'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles',
     
     # third party apps
     'rest_framework',
@@ -136,15 +128,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-# Cloudinary configuration
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': env('CLOUDINARY_API_KEY'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
